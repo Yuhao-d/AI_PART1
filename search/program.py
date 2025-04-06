@@ -34,16 +34,15 @@ def Astar(
     g_score: dict[Coord, int],
     came_from: dict[Coord, tuple[Coord, MoveAction]],
     open_set: list[tuple[int, Coord]],
-    heuristic: Callable[[Coord], int],
-    cost: int = 1
+    heuristic: Callable[[Coord], int]
 ) -> None:
     """
     Common A* pathfinding update logic shared by step and jump moves.
     Updates path data if a better route is found.
     """
-    if new_pos not in g_score or g_score[current] + cost < g_score[new_pos]:
+    if new_pos not in g_score or g_score[current] + 1 < g_score[new_pos]:
         came_from[new_pos] = (current, move_action)
-        g_score[new_pos] = g_score[current] + cost
+        g_score[new_pos] = g_score[current] + 1
         f_score = g_score[new_pos] + heuristic(new_pos)
         heapq.heappush(open_set, (f_score, new_pos))
 
